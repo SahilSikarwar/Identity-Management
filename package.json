@@ -1,0 +1,27 @@
+{
+  "name": "identity-management",
+  "version": "1.0.0",
+  "description": "This is a Decentralized KYC management system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SahilSikarwar/Identity-Management.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SahilSikarwar/Identity-Management/issues"
+  },
+  "homepage": "https://github.com/SahilSikarwar/Identity-Management#readme",
+  "dependencies": {
+    "fs-extra": "^9.0.0",
+    "ganache-cli": "^6.9.1",
+    "mocha": "^7.1.2",
+    "solc": "^0.4.25",
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^1.2.7"
+  }
+}
