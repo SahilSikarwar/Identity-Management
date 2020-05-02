@@ -3,7 +3,7 @@ const Web3 = require("web3");
 const compiledID = require("./build/IdentityManagement.json");
 
 const provider = new HDWalletProvider(
-  "universe skirt hat mimic hub replace bunker collect foam excite force album",
+  "12 word mnemonic",
   "https://rinkeby.infura.io/v3/435bc476269647dfb0fafcced02594c5"
 );
 
