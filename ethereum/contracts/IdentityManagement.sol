@@ -167,7 +167,8 @@ contract IdentityManagement {
         address _userAddress,
         address _senderAddress,
         string _requestedBy
-    ) public existingUserCheck {
+    ) public {
+        require(userInfoMap[_userAddress] != 0, "User Does not exist!");
         licenceRequest memory request = licenceRequest({
             senderAddress: _senderAddress,
             requestedBy: _requestedBy,
