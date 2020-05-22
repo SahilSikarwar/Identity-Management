@@ -4,7 +4,8 @@
   "description": "This is a Decentralized KYC management system.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "dev": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,16 @@
   "dependencies": {
     "fs-extra": "^9.0.0",
     "ganache-cli": "^6.9.1",
+    "lodash": "^4.17.15",
     "mocha": "^7.1.2",
+    "next": "^9.3.6",
+    "next-routes": "^1.4.2",
+    "react": "^16.13.1",
+    "react-datepicker": "^2.14.1",
+    "react-dom": "^16.13.1",
+    "react-router": "^5.1.2",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
     "solc": "^0.4.25",
     "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.2.7"

@@ -3,6 +3,7 @@ const fs = require("fs-extra");
 const solc = require("solc");
 
 const buildPath = path.resolve(__dirname, "build");
+fs.removeSync(buildPath);
 
 const IDPath = path.resolve(__dirname, "contracts", "IdentityManagement.sol");
 const source = fs.readFileSync(IDPath, "utf8");

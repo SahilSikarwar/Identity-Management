@@ -26,26 +26,15 @@ contract IdentityManagement {
     }
 
     // store request for licence
-    // numbers for status
-
-    // 0 -- default
-    // 1 -- requested
-    // 2 -- approved
-    // 3 -- rejected
-
-    // for overallStatus:
+    // numbers for overallStatus
     // 1 - requested
-    // 2 - partial
-    // 3 - approved
-    // 4 - rejected
+    // 2 - approved
+    // 3 - rejected
 
     struct licenceRequest {
+        address userAddress;
         address senderAddress;
         string requestedBy;
-        uint256 lNumber;
-        uint256 lName;
-        uint256 lDOB;
-        uint256 lAddress;
         uint256 overallStatus;
     }
 
@@ -148,34 +137,29 @@ contract IdentityManagement {
 
     // view user licence
     // user index 0 by default cause for now we are adding only drivers licence
-    function viewUserLicence()
+    function viewUserLicence(address _userAddress)
         public
         view
         returns (uint256, string, string, string)
     {
         require(
-            userLicenceMap[msg.sender].length != 0,
+            userLicenceMap[_userAddress].length != 0,
             "You dont have any document in your wallet!"
         );
 
-        userLicence storage licence = userLicenceMap[msg.sender][0];
+        userLicence storage licence = userLicenceMap[_userAddress][0];
         return (licence.lNumber, licence.lName, licence.lDOB, licence.lAddress);
     }
 
     // add licence request and send it to the user
-    function addLicenceRequest(
-        address _userAddress,
-        address _senderAddress,
-        string _requestedBy
-    ) public {
+    function addLicenceRequest(address _userAddress, string _requestedBy)
+        public
+    {
         require(userInfoMap[_userAddress] != 0, "User Does not exist!");
         licenceRequest memory request = licenceRequest({
-            senderAddress: _senderAddress,
+            userAddress: _userAddress,
+            senderAddress: msg.sender,
             requestedBy: _requestedBy,
-            lNumber: 1,
-            lName: 1,
-            lDOB: 1,
-            lAddress: 1,
             overallStatus: 1
         });
 
@@ -183,30 +167,26 @@ contract IdentityManagement {
     }
 
     // Function returns the request array values
-    function viewLicenceRequest(uint256 _index)
+    function viewLicenceRequest(address _userAddress, uint256 _index)
         public
         view
-        returns (address, string, uint256, uint256, uint256, uint256, uint256)
+        returns (address, string, uint256)
     {
-        licenceRequest memory request = licenceRequestMap[msg.sender][_index];
+        licenceRequest memory request = licenceRequestMap[_userAddress][_index];
         return (
             request.senderAddress,
             request.requestedBy,
-            request.lNumber,
-            request.lName,
-            request.lDOB,
-            request.lAddress,
             request.overallStatus
         );
     }
 
     // function that returns senderAddress, requestedBy and overallStatus
-    function viewRequestHeader(uint256 _index)
+    function viewRequestHeader(address _userAddress, uint256 _index)
         public
         view
         returns (address, string, uint256)
     {
-        licenceRequest memory request = licenceRequestMap[msg.sender][_index];
+        licenceRequest memory request = licenceRequestMap[_userAddress][_index];
         return (
             request.senderAddress,
             request.requestedBy,
@@ -215,25 +195,18 @@ contract IdentityManagement {
     }
 
     // function that returns length of licenceRequest array
-    function viewRequestLength() public view returns (uint256) {
-        return licenceRequestMap[msg.sender].length;
+    function viewRequestLength(address _userAddress)
+        public
+        view
+        returns (uint256)
+    {
+        return licenceRequestMap[_userAddress].length;
     }
 
     // function allow user to finalize request and give
     // approval for specific data in the request
-    function finalizeRequest(
-        uint256 _index,
-        uint256 _lNumber,
-        uint256 _lName,
-        uint256 _lDOB,
-        uint256 _lAddress,
-        uint256 _overallStatus
-    ) public {
+    function finalizeRequest(uint256 _index, uint256 _overallStatus) public {
         licenceRequest storage request = licenceRequestMap[msg.sender][_index];
-        request.lNumber = _lNumber;
-        request.lName = _lName;
-        request.lDOB = _lDOB;
-        request.lAddress = _lAddress;
         request.overallStatus = _overallStatus;
     }
 }

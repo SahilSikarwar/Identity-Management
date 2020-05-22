@@ -52,7 +52,9 @@ describe("Identity Management", () => {
         gas: "1000000",
       });
 
-    const licence = await idContract.methods.viewUserLicence().call();
+    const licence = await idContract.methods
+      .viewUserLicence(accounts[0])
+      .call();
     assert.equal("sahil", licence[1]);
   });
 
@@ -99,7 +101,9 @@ describe("Identity Management", () => {
         gas: "1000000",
       });
 
-    const licence = await idContract.methods.viewUserLicence().call();
+    const licence = await idContract.methods
+      .viewUserLicence(accounts[0])
+      .call();
     assert.equal("sikarwar", licence[1]);
   });
 
@@ -111,18 +115,19 @@ describe("Identity Management", () => {
     });
 
     //add licence request
-    await idContract.methods
-      .addLicenceRequest(accounts[0], accounts[1], "abc")
-      .send({
-        from: accounts[1],
-        gas: "1000000",
-      });
+    await idContract.methods.addLicenceRequest(accounts[0], "abc").send({
+      from: accounts[1],
+      gas: "1000000",
+    });
 
     // view licence and check request array length
-    const request = await idContract.methods.viewLicenceRequest(0).call();
-    const requestCount = await idContract.methods.viewRequestLength().call();
+    const request = await idContract.methods
+      .viewLicenceRequest(accounts[0], 0)
+      .call();
+    const requestCount = await idContract.methods
+      .viewRequestLength(accounts[0])
+      .call();
 
-    assert.equal(accounts[1], request[0]);
     assert.equal("abc", request[1]);
     assert.equal(1, request[2]);
     assert.equal(1, requestCount);
@@ -135,20 +140,19 @@ describe("Identity Management", () => {
     });
 
     //add licence request
-    await idContract.methods
-      .addLicenceRequest(accounts[0], accounts[1], "abc")
-      .send({
-        from: accounts[1],
-        gas: "1000000",
-      });
+    await idContract.methods.addLicenceRequest(accounts[0], "abc").send({
+      from: accounts[1],
+      gas: "1000000",
+    });
 
     // finalize licence request
-    await idContract.methods.finalizeRequest(0, 2, 3, 2, 3, 2).send({
+    await idContract.methods.finalizeRequest(0, 2).send({
       from: accounts[0],
       gas: "1000000",
     });
-    const request = await idContract.methods.viewLicenceRequest(0).call();
+    const request = await idContract.methods
+      .viewLicenceRequest(accounts[0], 0)
+      .call();
     assert.equal(2, request[2]);
-    assert.equal(3, request[3]);
   });
 });

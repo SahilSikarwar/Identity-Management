@@ -3,7 +3,7 @@ const Web3 = require("web3");
 const compiledID = require("./build/IdentityManagement.json");
 
 const provider = new HDWalletProvider(
-  "12 word mnemonic",
+  "universe skirt hat mimic hub replace bunker collect foam excite force album",
   "https://rinkeby.infura.io/v3/435bc476269647dfb0fafcced02594c5"
 );
 
@@ -20,4 +20,4 @@ const deploy = async () => {
   console.log("Contract deployed to", result.options.address);
 };
 deploy();
-// Contract deployed at 0x231d095b8dadA35B7A46a386b3E73F4b28113863
+// Contract deployed at 0x8C3f1149800DEe831dA6e7EA6814858c43A66849
